@@ -196,30 +196,30 @@ class ClientHomePage extends StatelessWidget {
                                 ConstStyle.tileSubTitleTextStyle),
                           ),
                         )
-                        // : mainNavController.appUser!.status == 1
-                        //     ? Container(
-                        //         width: 40.w,
-                        //         margin: EdgeInsets.all(5.sp),
-                        //         padding: EdgeInsets.all(5.sp),
-                        //         alignment: Alignment.center,
-                        //         height: 5.h,
-                        //         decoration: BoxDecoration(
-                        //             borderRadius:
-                        //                 BorderRadius.circular(25.sp),
-                        //             color: ConstColors.kButtonBrownColor,
-                        //             // gradient: ConstColors.kButtonBG,
-                        //             boxShadow: [
-                        //               BoxShadow(
-                        //                   color: Colors.grey.shade100,
-                        //                   blurRadius: 15.sp,
-                        //                   spreadRadius: 5.sp,
-                        //                   offset: const Offset(1, 1),
-                        //                   blurStyle: BlurStyle.inner)
-                        //             ]),
-                        //         child: Text('Processing',
-                        //             style:
-                        //                 ConstStyle.tileSubTitleTextStyle),
-                        //       )
+                        : mainNavController.isMyRequestAdded.value
+                            ? Container(
+                                width: 40.w,
+                                margin: EdgeInsets.all(5.sp),
+                                padding: EdgeInsets.all(5.sp),
+                                alignment: Alignment.center,
+                                height: 5.h,
+                                decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.circular(25.sp),
+                                    color: ConstColors.kButtonBrownColor,
+                                    // gradient: ConstColors.kButtonBG,
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: Colors.grey.shade100,
+                                          blurRadius: 15.sp,
+                                          spreadRadius: 5.sp,
+                                          offset: const Offset(1, 1),
+                                          blurStyle: BlurStyle.inner)
+                                    ]),
+                                child: Text('Processing',
+                                    style:
+                                        ConstStyle.tileSubTitleTextStyle),
+                              )
                             : GestureDetector(
                           onTap: () {
                             showDialog(context: context, builder: (context){
@@ -260,13 +260,9 @@ class ClientHomePage extends StatelessWidget {
                                 Text('Pay Now',
                                     style: ConstStyle
                                         .tileSubTitleTextStyle.copyWith(
-                                      color: ConstColors.kTextFieldBGColor
+                                      color: ConstColors.kWhiteTextColor
                                     )),
-                                Text('For Free',
-                                    style: ConstStyle
-                                        .tileSubTitleTextStyle.copyWith(
-                                      color: ConstColors.kTextFieldBGColor
-                                    )),
+
                               ],
                             ),
                           ),

@@ -140,10 +140,8 @@ class AuthRepositoryImpl implements AuthRepository {
           return Left(Failure(message: response.data["error"].toString()));
         }
 
-
       }else if (response.statusCode == 400 ||response.statusCode == 404){
         return Left(Failure(message: response.data["error"].toString()));
-
       }
 
       return const Right(true);
@@ -168,20 +166,14 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Either<Failure, bool>> resendOtp(ModelOTP mdl) async {
     try {
       final response = await remoteDatabase.resendOtp(mdl);
-
       print("in repositoryyyyyy");
       print("${response.data["error"]}");
-
       if(response.statusCode == 200 ||response.statusCode == 201){
-
         print(response.data["data"].toString());
         if(response.data["data"] == null){
           return Left(Failure(message: response.data["error"].toString()));
         }
-
-
       }
-
       return const Right(true);
     } catch (error) {
       print('the quick brown fox jumps over the lazy dog');
@@ -220,9 +212,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
       print("in Registerrrrrrrrrrrrrr");
       print("${response.data["error"]}");
-
       if(response.statusCode == 200 ||response.statusCode == 201){
-
         print(response.data["data"].toString());
         if(response.data["data"] == null){
           return Left(Failure(message: response.data["error"].toString()));
@@ -241,20 +231,15 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Either<Failure, bool>> verifyOtp(ModelOTP mdl) async {
     try {
       final response = await remoteDatabase.verifyOtp(mdl);
-
       print("in repositoryyyyyy");
       print("${response.data["error"]}");
-
       if(response.statusCode == 200 ||response.statusCode == 201){
-
         print(response.data["data"].toString());
         if(response.data["data"] == null){
           return Left(Failure(message: response.data["error"].toString()));
         }
 
-
       }
-
       return const Right(true);
     } catch (error) {
       print('the quick brown fox jumps over the lazy dog');
@@ -267,24 +252,23 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Either<Failure, bool>> passOtp(ModelOTP mdl) async {
     try {
       final response = await remoteDatabase.passOtp(mdl);
-
       print("in repositoryyyyyy");
       print("${response.data["error"]}");
-
       if(response.statusCode == 200 ||response.statusCode == 201){
-
         print(response.data["data"].toString());
         if(response.data["data"] == null){
           return Left(Failure(message: response.data["error"].toString()));
-        }else{
-
+        }
+        else{
           return const Right(true);
         }
-
-
       }
-
-      return const Right(true);
+     else if(response.statusCode == 400 || response.statusCode == 404){
+       return Left(Failure(message: response.data["error"].toString()));
+     }
+      else {
+        return const Right(true);
+      }
     } catch (error) {
       print('the quick brown fox jumps over the lazy dog');
       print('erorrrrrrrrrrrrrrrrr ___________ $error');

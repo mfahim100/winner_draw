@@ -28,6 +28,7 @@ import '../../../../admin/main_admin/domain/use_cases/add_participant_use_case.d
 import '../../../../admin/main_admin/domain/use_cases/add_photo_comment_use_case.dart';
 import '../../../../admin/main_admin/domain/use_cases/get_current_lucky_draw_use_case.dart';
 import '../../../../admin/main_admin/domain/use_cases/get_current_results_use_case.dart';
+import '../../../../admin/main_admin/domain/use_cases/get_firebase_request_usecase.dart';
 import '../../../../admin/main_admin/domain/use_cases/get_participants_use_case.dart';
 import '../../../../admin/main_admin/domain/use_cases/get_photo_comments_use_case.dart';
 import '../../../../admin/main_admin/domain/use_cases/get_photos_use_case.dart';
@@ -41,6 +42,8 @@ import 'package:audioplayers/audioplayers.dart';
 
 class MainNavClientController extends GetxController {
 
+
+  final GetFirebaseRequestUseCase getFirebaseRequestUseCase;
   AudioPlayer player = AudioPlayer();
   AudioPlayer player2 = AudioPlayer();
   RxBool isPlaying = false.obs;
@@ -209,6 +212,7 @@ class MainNavClientController extends GetxController {
   MainNavClientController({
     required this.getCurrentResultsUseCase,
     required this.getPhotoCommentsUseCase,
+    required this.getFirebaseRequestUseCase,
     required this.addPhotoCommentsUseCase,
     required this.likeDislikePhotoUseCase,
     required this.addParticipantUseCase,
@@ -852,12 +856,36 @@ class MainNavClientController extends GetxController {
       results.fold((e) {
         CustomSnakeBars.snakeBanner(context, 'Sorry', e.message, 'failure');
         print('the error in insertRequestController is //////${e.message}');
-
         EasyLoading.dismiss();
       }, (b) {
         CustomSnakeBars.snakeBanner(
             context, 'Hello', 'Request Has been added', 'success');
+        getMyRequest();
         EasyLoading.dismiss();
+      });
+    }
+  }
+
+  RxBool isMyRequestAdded=false.obs;
+  void getMyRequest() async {
+    final connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) {
+      print('check your connection');
+    }
+    else {
+      var results = await getFirebaseRequestUseCase(Params('uid'));
+      results.fold((e) {
+        // CustomSnakeBars.snakeBanner(context, 'Sorry', e.message, 'failure');
+        print('the error in getAllRequestController() is //////${e.message}');
+      }, (b) {
+        List<RequestModel> getAllRequest=b;
+        getAllRequest.forEach((req){
+          if(appUser != null){
+            if(appUser!.uid == req.userUid){
+              isMyRequestAdded.value=true;
+            }
+          }
+        });
       });
     }
   }

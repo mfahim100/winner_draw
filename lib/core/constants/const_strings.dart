@@ -1,6 +1,6 @@
 class ConstString {
   // static const String mainUrl="http://51.20.64.111/";
-  static const String mainUrl="https://walrus-app-styl6.ondigitalocean.app/";
+  static const String mainUrl="https://lobster-app-jxhup.ondigitalocean.app/";
   // static const String mainUrl="http://13.60.171.199/";
   static const String payUrl="https://api.paypro.com.pk";
   static const String payCustomUrl="https://api.pakluckydraw.fun";

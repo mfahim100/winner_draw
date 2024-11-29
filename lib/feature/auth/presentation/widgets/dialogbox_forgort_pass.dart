@@ -1,7 +1,6 @@
 import 'dart:ui';
 import 'package:get/get.dart';
 import 'package:neumorphic_ui/neumorphic_ui.dart';
-
 import 'package:responsive_sizer/responsive_sizer.dart';
 import '../../../../core/utils/injections.dart';
 import '../../../../core/widgets/default_button.dart';

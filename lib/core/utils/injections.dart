@@ -1,4 +1,3 @@
-
 import 'package:get_it/get_it.dart';
 import 'package:winner_draw/feature/auth/domain/use_cases/forget_use_case.dart';
 import 'package:winner_draw/feature/auth/domain/use_cases/login_user_use_case.dart';
@@ -51,17 +50,20 @@ final sl = GetIt.instance;
 Future<void> init() async {
   //! Controller
   sl.registerLazySingleton(() => ThemeController());
-  sl.registerLazySingleton(() => MainNavClientController(
-      getPhotosUseCase: sl(),
-      getCurrentLuckyDrawUseCase: sl(),
-      getSliderUseCase: sl(),
-      getParticipantsUseCase: sl(),
-      addParticipantUseCase: sl(),
-      likeDislikePhotoUseCase: sl(),
-      getPhotoCommentsUseCase: sl(),
-      addPhotoCommentsUseCase: sl(),
-      getCurrentResultsUseCase: sl(),
-      insertNewRequestUseCase: sl()));
+  sl.registerLazySingleton(
+    () => MainNavClientController(
+        getPhotosUseCase: sl(),
+        getCurrentLuckyDrawUseCase: sl(),
+        getSliderUseCase: sl(),
+        getParticipantsUseCase: sl(),
+        addParticipantUseCase: sl(),
+        likeDislikePhotoUseCase: sl(),
+        getPhotoCommentsUseCase: sl(),
+        addPhotoCommentsUseCase: sl(),
+        getCurrentResultsUseCase: sl(),
+        insertNewRequestUseCase: sl(),
+        getFirebaseRequestUseCase: sl()),
+  );
   sl.registerLazySingleton(() => MainNavAdminController(
       addLuckyDrawUseCase: sl(),
       getCurrentLuckyDrawUseCase: sl(),
@@ -75,7 +77,8 @@ Future<void> init() async {
       addParticipantUseCase: sl(),
       getRequestUseCase: sl(),
       deleteParticipantUseCase: sl(),
-      completeDrawUseCase: sl(), updateLuckyDrawUseCase: sl(),
+      completeDrawUseCase: sl(),
+      updateLuckyDrawUseCase: sl(),
       getFirebaseRequestUseCase: sl()));
   sl.registerLazySingleton(() => AuthController(
       registerUserUseCase: sl(),
@@ -84,7 +87,10 @@ Future<void> init() async {
       getAllUserUseCase: sl(),
       forgetUseCase: sl(),
       reSendOtpUseCase: sl(),
-      changePasswordUseCase: sl(), updateUserUseCase: sl(), verifyOtpUseCase: sl(), passOtpUseCase: sl()));
+      changePasswordUseCase: sl(),
+      updateUserUseCase: sl(),
+      verifyOtpUseCase: sl(),
+      passOtpUseCase: sl()));
   sl.registerLazySingleton(() => SplashController(getUserUseCase: sl()));
 
   //! USE CASES
@@ -118,8 +124,10 @@ Future<void> init() async {
   sl.registerLazySingleton(() => DeleteParticipantUseCase(repository: sl()));
   sl.registerLazySingleton(() => UpdateLuckyDrawUseCase(repository: sl()));
   sl.registerLazySingleton(() => VerifyOtpUseCase(repository: sl()));
-  sl.registerLazySingleton(() => InsertNewRequestUseCase(adminRepository: sl()));
-  sl.registerLazySingleton(() => GetFirebaseRequestUseCase(adminRepository: sl()));
+  sl.registerLazySingleton(
+      () => InsertNewRequestUseCase(adminRepository: sl()));
+  sl.registerLazySingleton(
+      () => GetFirebaseRequestUseCase(adminRepository: sl()));
 
   //! REPOSITORIES
   sl.registerLazySingleton<AuthRepository>(
@@ -131,7 +139,8 @@ Future<void> init() async {
 
   //! DATA SOURCES
   sl.registerLazySingleton<MainDatabase>(() => DatabaseImpl());
-  sl.registerLazySingleton<AdminMainDatabase>(() => AdminDatabaseImpl(),
+  sl.registerLazySingleton<AdminMainDatabase>(
+    () => AdminDatabaseImpl(),
   );
   //! CORE
 

@@ -22,6 +22,9 @@ class CheckProvider extends ChangeNotifier {
   Future<void> uploadRequestPhoto(BuildContext context) async {
     EasyLoading.show();
     ImagePicker imagePicker = ImagePicker();
+    if(selectedImage == null){
+      EasyLoading.dismiss();
+    }
     // XFile? file = await imagePicker.pickImage(source: ImageSource.gallery);
     selectedImage = await imagePicker.pickImage(source: ImageSource.gallery);
     selImg = await  selectedImage!.readAsBytes();

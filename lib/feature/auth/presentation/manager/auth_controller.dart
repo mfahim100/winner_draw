@@ -7,6 +7,8 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:winner_draw/feature/auth/presentation/pages/otp_screen.dart';
+import 'package:winner_draw/feature/auth/presentation/pages/signin_screen.dart';
 import '../../../../core/routes/app_pages.dart';
 import '../../../../core/utils/injections.dart';
 import '../../../../core/utils/use_case.dart';
@@ -91,6 +93,24 @@ class AuthController extends GetxController {
   TextEditingController newPasswordController = TextEditingController();
   TextEditingController confirmNewPasswordController = TextEditingController();
 
+
+
+  clearController(){
+     signUpNameController.clear();
+     signUpPhoneController.clear();
+     signUpEmailController.clear();
+     signUpPasswordController.clear();
+     signUpConfirmPasswordController .clear();
+     forgotPassEmailController.clear();
+     signInEmailController.clear();
+     changePasswordEmailController.clear();
+     signInPasswordController.clear();
+     oldPasswordController.clear();
+     newPasswordController.clear();
+     confirmNewPasswordController .clear();
+     cleanImage();
+  }
+
   Future<void> signUpSubmit(BuildContext context) async {
     final connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.none) {
@@ -146,7 +166,9 @@ class AuthController extends GetxController {
               sl<MainNavClientController>().getCurrentLuckyDraw();
               sl<MainNavAdminController>().getCurrentLuckyDraw();
               sl<MainNavClientController>().loadData();
-              Get.toNamed(Routes.OTPSCREEN);
+              Get.offAll(OtpScreen());
+              // Get.toNamed(Routes.OTPSCREEN);
+              clearController();
               // signUpNameController.clear();
               // signUpPasswordController.clear();
               // signUpPhoneController.clear();
@@ -180,30 +202,27 @@ class AuthController extends GetxController {
 
   Future<void> forgotPassSubmit(BuildContext context) async {
     EasyLoading.show();
-    if (forgotPassEmailController.text.isNotEmpty) {
-      if (forgetFormKey.currentState!.validate()) {
-        AppUser user = AppUser(email: forgotPassEmailController.text);
-        var results = await forgetUseCase(Params(user));
-
-        results.fold(
-            (failure) => CustomSnakeBars.snakeBanner(
-                context, 'Failed', failure.message, 'failure'), (value) {
-          GetStorage().write("email", forgotPassEmailController.text);
-          isForgot.value = false;
-          Get.dialog(ForgotPassDialogBox());
-        });
-        // await authService.forgetPass(forgotPassEmailController.text);
-      } else {
-        CustomSnakeBars.snakeBanner(
-            context, 'Failed', 'Please Enter Your Email', 'failure');
-      }
+    if (forgetFormKey.currentState!.validate()) {
+      AppUser user = AppUser(email: forgotPassEmailController.text);
+      var results = await forgetUseCase(Params(user));
+      results.fold(
+              (failure) => CustomSnakeBars.snakeBanner(
+              context, 'Failed', failure.message, 'failure'),
+              (value) {
+            GetStorage().write("email", forgotPassEmailController.text);
+            isForgot.value = false;
+            Get.dialog(ForgotPassDialogBox());
+            clearController();
+          });
+      // await authService.forgetPass(forgotPassEmailController.text);
     } else {
       CustomSnakeBars.snakeBanner(
-          context, 'Failed', 'Please Enter Correct Email', 'failure');
+          context, 'Failed', 'Please Enter Your Email', 'failure');
     }
 
     EasyLoading.dismiss();
   }
+
 
   Future<bool> changePassword(BuildContext context) async {
     final connectivityResult = await (Connectivity().checkConnectivity());
@@ -223,7 +242,7 @@ class AuthController extends GetxController {
               context, 'Failed', failure.message, 'failure');
         }, (value) {
           if (value != null) {
-            newPasswordController.clear();
+           clearController();
             return true;
           } else {
             CustomSnakeBars.snakeBanner(
@@ -381,7 +400,7 @@ class AuthController extends GetxController {
   callWhatsApp() async {
     var contact = "+923039208843";
     var androidUrl =
-        "whatsapp://send?phone=$contact&text=Hi, I'm interested in services you provide.";
+        "whatsapp://send?phone=$contact&text=Hi, I need some help.";
     var iosUrl =
         "https://wa.me/$contact?text=${Uri.parse("Hi, I'm interested in services you provide.")}";
 
@@ -472,7 +491,6 @@ class AuthController extends GetxController {
   reSendOTP() async {
     String emailX = GetStorage().read("email");
     ModelOTP mdl = ModelOTP(email: emailX);
-
     var results = await reSendOtpUseCase(Params(mdl));
     results.fold((failure) => null, (value) {
       if (value != null) {
@@ -516,20 +534,22 @@ class AuthController extends GetxController {
         if (failure.message == "Your account is not verified.") {
       Get.toNamed(Routes.OTPSCREEN);
     }
-  }, (value) {
+  }, (value) async {
       if (value != null) {
+
         sl<MainNavAdminController>().loadData();
         sl<MainNavAdminController>().getCurrentLuckyDraw();
         sl<MainNavClientController>().getCurrentLuckyDraw();
+        sl<MainNavClientController>().getMyRequest();
         // sl<MainNavClientController>().loadData();
         sl<MainNavClientController>().appUser = value;
         sl<MainNavClientController>().isUser.value = true;
-
         if (value.isAdmin!) {
           Get.offAllNamed(Routes.MAINADMIN);
         } else {
           Get.offAllNamed(Routes.MAINCLIENT);
         }
+        clearController();
       }
     });
     EasyLoading.dismiss();
@@ -559,18 +579,18 @@ EasyLoading.show();
 
   Future<bool> passOTP(BuildContext context) async {
     if (forgetPassFormKey.currentState!.validate()) {
-
       if (isOTPComplete.value) {
         EasyLoading.show();
         String emailX = GetStorage().read("email");
         ModelOTP mdl = ModelOTP(
             email: emailX,
             otpCode: opt.value,
-
             newPassword: newPasswordController.text);
-
         var results = await passOtpUseCase(Params(mdl));
-        results.fold((failure) => null, (value) {
+        results.fold((failure) {
+          CustomSnakeBars.snakeBanner(
+              context, 'Failed', failure.message, 'failure');
+        }, (value) {
           if (value) {
             isForgot.value = true;
             Get.dialog(OtpSuccessDialogBox(

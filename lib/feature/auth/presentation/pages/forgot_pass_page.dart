@@ -187,11 +187,7 @@ class ForgotPassPage extends StatelessWidget {
                                       child: DefaultButton(
                                         text: 'Submit',
                                         onPressed: () async {
-
-
                                               await controller.passOTP(context);
-
-
                                         },
                                       ),
                                     ),

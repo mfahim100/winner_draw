@@ -24,10 +24,10 @@ class SelectPhotoContainer extends StatelessWidget {
                 children: [
                   IconButton(onPressed: (){
                     checkProvider.uploadRequestPhoto(context);
-                  }, icon: Icon(Icons.upload,color: Colors.white,size: 9.h,)),
+                  }, icon: Icon(Icons.upload,color: Colors.black,size: 9.h,)),
                   Text('Click The Icon To Upload Picture',style: TextStyle(
                       fontSize: 2.h,
-                      color: Colors.white
+                      color: Colors.black
                   ),)
                 ],
               ),

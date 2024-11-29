@@ -1,8 +1,11 @@
 
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:neumorphic_ui/neumorphic_ui.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import '../../../../core/constants/const_neus.dart';
 import '../../../../core/constants/const_styles.dart';
+import '../../../../core/routes/app_pages.dart';
 import '../../../../core/utils/injections.dart';
 import '../../../../core/widgets/default_button.dart';
 import '../../../../core/widgets/default_text_field.dart';

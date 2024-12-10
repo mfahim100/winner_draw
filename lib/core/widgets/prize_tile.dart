@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:neumorphic_ui/neumorphic_ui.dart';
 
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -65,7 +67,14 @@ class PrizeTile extends StatelessWidget {
 
                   Container(
                       width: 33.w,
-                      child: Image.network("${ConstString.baseUrlImage}${imgUrl.toString()}")),
+                      child:
+                      CachedNetworkImage(
+                        imageUrl: "${ConstString.baseUrlImage}${imgUrl.toString()}",
+                        placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                      ),
+                      // Image.network("${ConstString.baseUrlImage}${imgUrl.toString()}")
+                  ),
 
                   SizedBox(width: 1.w,),
                   Container(
@@ -110,15 +119,17 @@ class PrizeTile extends StatelessWidget {
                         ),
                         Align(
                           alignment: Alignment.topLeft,
-                          child: Text(
-                            'Timer: ${no == 1
-                                ? mainController.timerVal1.value
-                                : no == 2
-                                ? mainController.timerVal2.value
-                                : no == 3
-                                ? mainController.timerVal3.value
-                                : mainController.timerVal1.value}',
-                            style: ConstStyle.prizeContainerTextStyles,
+                          child: Obx(()=>
+                           Text(
+                              'Timer: ${no == 1
+                                  ? mainController.timerVal1.value
+                                  : no == 2
+                                  ? mainController.timerVal2.value
+                                  : no == 3
+                                  ? mainController.timerVal3.value
+                                  : mainController.timerVal1.value}',
+                              style: ConstStyle.prizeContainerTextStyles,
+                            ),
                           ),
                         ),
 

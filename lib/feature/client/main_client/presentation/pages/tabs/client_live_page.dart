@@ -51,26 +51,10 @@ class ClientLivePage extends StatelessWidget {
                         child: ListView.builder(
                           itemCount: mainNavController.luckyDrawList.length + 1,
                           itemBuilder: (context, index) => GestureDetector(
-                            // onTap: () {
-                            //   mainNavController.setCelebration();
-                            //   Get.dialog(WinnerDialogBox(
-                            //     prize: ModelResults(
-                            //       userImg: "",
-                            //       pid: "asd",
-                            //       title: "asd",
-                            //       price: 123,
-                            //       description: "asd",
-                            //       timer: 1698903847278,
-                            //       imgUrl: "https://firebasestorage.googleapis.com/v0/b/pak-lucky-draw-67173.appspot.com/o/luckyDraw%2F1698042817914758?alt=media&token=cfb54972-caaa-40be-8c8a-b69f96dff7cf",
-                            //       status: 0,prizeNo: 1,uid: "D8fSC2YLTbSEdKpjiCBexnSFV993",
-                            //       name: "Kamran",email: "kamran@gmail.com",phone: "03465227583"
-                            //     ),
-                            //   ),barrierDismissible: false);
-                            // },
                             child: index == mainNavController.luckyDrawList.length
                                 ? Container(
                                     height: 40.h,
-                                    margin: EdgeInsets.all(15.sp),
+                                    margin: EdgeInsets.only(top:15.sp,left:15.sp,right:15.sp,bottom:25.sp,),
                                 decoration:  BoxDecoration(
                                   borderRadius: BorderRadius.circular(03.w),
                                   color: Colors.white,
@@ -98,15 +82,13 @@ class ClientLivePage extends StatelessWidget {
                                             ),
                                           ),
                                         ),
-                                        SizedBox(
+                                        Container(
                                           height: 30.h,
                                           child: Column(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceEvenly,
                                             children: [
-                                              Obx(() => mainNavController
-                                                          .isTimer1.value &&
-                                                      mainNavController
+                                              Obx(() => mainNavController.isTimer1.value && mainNavController
                                                           .currentResultList
                                                           .isNotEmpty
                                                   ? NeumorphicText(
@@ -119,7 +101,10 @@ class ClientLivePage extends StatelessWidget {
                                                       style: const NeumorphicStyle(
                                                           color: Colors.black),
                                                     )
-                                                  : Container()),
+                                                  : Container(child: Center(child: Text("No Current Winner Yet",style: TextStyle(
+                                                fontSize: 20.sp,
+                                                fontWeight: FontWeight.bold
+                                              ),),),)),
                                               Obx(() => mainNavController
                                                           .isTimer1.value &&
                                                       mainNavController
@@ -148,8 +133,7 @@ class ClientLivePage extends StatelessWidget {
                                                               .length >
                                                           2
                                                   ? ListTileResultsClient(
-                                                      results: mainNavController
-                                                          .currentResultList[2],
+                                                      results: mainNavController.currentResultList[2],
                                                     )
                                                   : Container()),
                                             ],
@@ -170,9 +154,7 @@ class ClientLivePage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
+
                   ],
                 ),
               ),
@@ -181,7 +163,6 @@ class ClientLivePage extends StatelessWidget {
               height: 40.h,
               margin: EdgeInsets.all(15.sp),
               decoration: BoxDecoration(
-                  color: Colors.white,
                   borderRadius: BorderRadius.circular(15.sp)),
               child: Column(
                 children: [
@@ -249,6 +230,8 @@ class ClientLivePage extends StatelessWidget {
                 ],
               ),
             ),
+
+
 
     );
   }

@@ -9,6 +9,8 @@ import '../../../../../core/utils/injections.dart';
 import '../../../../client/main_client/presentation/widgets/dialogbox_comments.dart';
 import '../../domain/entities/model_photos.dart';
 import '../manager/main_nav_admin_controller.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+
 
 class ListTilePhotos extends StatelessWidget {
   final ModelPhotos photos;
@@ -64,12 +66,19 @@ class ListTilePhotos extends StatelessWidget {
                 BoxDecoration(borderRadius: BorderRadius.circular(15.sp)),
             child: Stack(
               children: [
-                Image.network(
-                  "${ConstString.baseUrlImage}${photos.imgUrl!}",
-                  fit: BoxFit.cover,
-                  height: 30.h,
-                  width: 80.h,
+
+                CachedNetworkImage(
+                  // imageUrl: "https://blurha.sh/12c2aca29ea896a628be.jpg",
+                  imageUrl: "${ConstString.baseUrlImage}${photos.imgUrl!}",
+                  placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
                 ),
+                // Image.network(
+                //   "${ConstString.baseUrlImage}${photos.imgUrl!}",
+                //   fit: BoxFit.cover,
+                //   height: 30.h,
+                //   width: 80.h,
+                // ),
                 Positioned(
                   bottom: 0,
                   right: 0,

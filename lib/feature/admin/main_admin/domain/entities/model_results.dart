@@ -75,14 +75,14 @@ class ModelResults {
     description = json['description'] ?? "";
     email = json["winner"]['email'] ?? "";
     name = json["winner"]['name'] ?? "";
-    phone = json["winner"]['phone'] ?? "";
+    phone = json["winner"]['contact'] ?? "";
     userImg = json["winner"]['profilePic'] ?? "";
     print("::::::::::: ${json["winner"]['name']} : $name");
-    print("::::::::::: ${json["winner"]['phone']} : $phone");
+    print("::::::::::: ${json["winner"]['contact']} : $phone");
     print("::::::::::: ${json['draw']['drawNumber']} : $prizeNo");
-    if (json["winner"]['phone'] == null) {
-      phone = "03000136706";
-    }
+    // if (json["winner"]['phone'] == null) {
+    //   phone = "03000136706";
+    // }
   }
 
   Map<String, dynamic> toJson() {

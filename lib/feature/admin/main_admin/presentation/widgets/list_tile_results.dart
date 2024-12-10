@@ -12,6 +12,9 @@ class ListTileResults extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    DateTime d = DateTime.fromMillisecondsSinceEpoch(results.timer!);
+    String date = "${d.day}/${d.month}/${d.year}";
     return Container(
       margin: EdgeInsets.all(10.sp),
       padding: EdgeInsets.all(10.sp),
@@ -72,6 +75,7 @@ class ListTileResults extends StatelessWidget {
                           fontSize: 20.sp, fontWeight: FontWeight.bold),
                       style: const NeumorphicStyle(color: Colors.black54),
                     ),
+                    SizedBox(height: .5.h,),
                     Container(
                       child: isClient
                           ? NeumorphicText(
@@ -85,8 +89,14 @@ class ListTileResults extends StatelessWidget {
                                   const NeumorphicStyle(color: Colors.black54),
                             ),
                     ),
+                    SizedBox(height: .5.h,),
                     NeumorphicText(
                       results.email!.length<=20?results.email!:"${results.email!.substring(0,20)}...",
+                      style: const NeumorphicStyle(color: Colors.black54),
+                    ),
+                    SizedBox(height: .5.h,),
+                    NeumorphicText(
+                      'Date: $date',
                       style: const NeumorphicStyle(color: Colors.black54),
                     ),
                   ],

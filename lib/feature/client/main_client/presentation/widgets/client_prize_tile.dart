@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:neumorphic_ui/neumorphic_ui.dart';
 
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -54,7 +56,15 @@ class ClientPrizeTile extends StatelessWidget {
 
                           Container(
                               width: 33.w,
-                              child: Image.network("${ConstString.baseUrlImage}${prize.imgUrl!}")),
+                              child: CachedNetworkImage(
+                                imageUrl: "${ConstString.baseUrlImage}${prize.imgUrl!}",
+                                placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                                errorWidget: (context, url, error) => Icon(Icons.error),
+                              ),
+
+                              // Image.network("${ConstString.baseUrlImage}${prize.imgUrl!}")
+
+                          ),
 
                           SizedBox(width: 1.w,),
                           Container(
@@ -77,19 +87,21 @@ class ClientPrizeTile extends StatelessWidget {
                                 style: ConstStyle.prizeContainerTextStyles,
                                                       ),
                             ),
-                                                     Align(
-                                                       alignment: Alignment.topLeft,
-                                                       child: Text(
-                                                        'Timer: ${prize.no == 1
-                                                            ? mainController.timerVal1.value
-                                                       : prize.no == 2
-                                                            ? mainController.timerVal2.value
-                                                            : prize.no == 3
-                                                            ? mainController.timerVal3.value
-                                                       : mainController.timerVal1.value}',
-                                                        style: ConstStyle.prizeContainerTextStyles,
-                                                                                                           ),
-                                                     ),
+                                Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Obx(()=>
+                                    Text(
+                                      'Timer: ${prize.no == 1
+                                          ? mainController.timerVal1.value
+                                          : prize.no == 2
+                                          ? mainController.timerVal2.value
+                                          : prize.no == 3
+                                          ? mainController.timerVal3.value
+                                          : mainController.timerVal1.value}',
+                                      style: ConstStyle.prizeContainerTextStyles,
+                                    ),
+                                  ),
+                                ),
 
 
                                 Align(alignment: Alignment.topLeft, child: Text(' Date:  ${DateTime.fromMillisecondsSinceEpoch(prize.timer!).day}/${DateTime.fromMillisecondsSinceEpoch(prize.timer!).month}/${DateTime.fromMillisecondsSinceEpoch(prize.timer!).year}', style: ConstStyle.prizeContainerTextStyles,)),

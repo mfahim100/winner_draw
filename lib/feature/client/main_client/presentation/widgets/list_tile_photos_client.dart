@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -79,12 +80,17 @@ class ListTilePhotosClient extends StatelessWidget {
                         clipBehavior: Clip.antiAlias,
                         decoration:
                             BoxDecoration(borderRadius: BorderRadius.circular(15.sp)),
-                        child: Image.network(
-                          "${ConstString.baseUrlImage}${photos.imgUrl!}",
-                          fit: BoxFit.cover,
-                          height: 30.h,
-                          width: 80.h,
+                        child: CachedNetworkImage(
+                          imageUrl: "${ConstString.baseUrlImage}${photos.imgUrl!}",
+                          placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                          errorWidget: (context, url, error) => Icon(Icons.error),
                         ),
+                        // Image.network(
+                        //   "${ConstString.baseUrlImage}${photos.imgUrl!}",
+                        //   fit: BoxFit.cover,
+                        //   height: 30.h,
+                        //   width: 80.h,
+                        // ),
                       ),
                       SizedBox(
                         height: 2.h,
@@ -112,6 +118,8 @@ class ListTilePhotosClient extends StatelessWidget {
                                     width: 2.w,
                                   ),
                                   Text(
+                                      photos.status==1?
+                                    "Unlike (${photos.like!})":
                                     "Like (${photos.like!})",
                                     style: ConstStyle.tileTitleTextStyle
                                         .copyWith(color: Colors.black87),

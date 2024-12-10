@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -10,6 +11,7 @@ import 'core/controllers/theme_controller.dart';
 import 'core/utils/main_method.dart';
 
 Future<void> main() async {
+  CachedNetworkImage.logLevel = CacheManagerLogLevel.debug;
  await MainMethod.init();
  print("::::VVVV:::::");
  print(DateTime.now().toString());

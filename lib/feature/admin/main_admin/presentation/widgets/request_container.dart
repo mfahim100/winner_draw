@@ -1,4 +1,5 @@
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import '../../../../../core/constants/const_styles.dart';
@@ -37,14 +38,24 @@ class RequestContainer extends StatelessWidget {
                         child: Container(
                           width: 100.w,
                           color: Colors.red,
-                          child: Image.network(requestModel.screenShotUrl!),
+                          child:CachedNetworkImage(
+                            imageUrl: requestModel.screenShotUrl!,
+                            placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                            errorWidget: (context, url, error) => Icon(Icons.error),
+                          ),
+                          // Image.network(requestModel.screenShotUrl!),
                         ),
                       );
                     });
                   },
                   child: Container(
                     width: 35.w,
-                    child: Image.network(requestModel.screenShotUrl!),
+                    child: CachedNetworkImage(
+                      imageUrl: requestModel.screenShotUrl!,
+                      placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    ),
+                    // Image.network(requestModel.screenShotUrl!),
                   
                   ),
                 ),

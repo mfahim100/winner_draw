@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -23,15 +24,17 @@ class PageViewContent extends StatelessWidget {
               color: Colors.grey.shade100,
               borderRadius: BorderRadius.circular(15.sp)),
           child: Container(
+            height: 30.h,
+            width: 80.h,
             clipBehavior: Clip.antiAlias,
             decoration:
                 BoxDecoration(borderRadius: BorderRadius.circular(15.sp)),
-            child: Image.network(
-              image,
-              fit: BoxFit.cover,
-              height: 30.h,
-              width: 80.h,
+            child:CachedNetworkImage(
+              imageUrl: image,
+              placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+              errorWidget: (context, url, error) => Icon(Icons.error),
             ),
+            // Image.network(image,fit: BoxFit.cover,),
           ),
         ),
         Positioned(
@@ -58,27 +61,7 @@ class PageViewContent extends StatelessWidget {
               ),
             ),
           ),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: [
-          //     SizedBox(
-          //       width: 10.sp,
-          //     ),
-          //     CircleAvatar(
-          //       radius: 10.sp,
-          //       backgroundColor:
-          //           index == 1 ? ConstColors.kButtonBrownColor : Colors.grey,
-          //     ),
-          //     SizedBox(
-          //       width: 10.sp,
-          //     ),
-          //     CircleAvatar(
-          //       radius: 10.sp,
-          //       backgroundColor:
-          //           index == 2 ? ConstColors.kButtonBrownColor : Colors.grey,
-          //     )
-          //   ],
-          // ),
+
         )
       ],
     );

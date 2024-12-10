@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:get/get.dart';
 import 'package:neumorphic_ui/neumorphic_ui.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -85,7 +86,12 @@ class EditPrizeDialogBox extends StatelessWidget {
                                 child: SizedBox(
                                   height: 15.h,
                                   child: mainController.editImageFromDatabase.value
-                                      ? Image.network("${ConstString.baseUrlImage}${mainController.editImageFromDatabaseUrl.value}")
+                                      ? CachedNetworkImage(
+                                    imageUrl: "${ConstString.baseUrlImage}${mainController.editImageFromDatabaseUrl.value}",
+                                    placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                                    errorWidget: (context, url, error) => Icon(Icons.error),
+                                  )
+                                  // Image.network("${ConstString.baseUrlImage}${mainController.editImageFromDatabaseUrl.value}")
                                       :mainController.isImage.value
                                       ? Image.file(mainController.file!)
                                       : CircleAvatar(

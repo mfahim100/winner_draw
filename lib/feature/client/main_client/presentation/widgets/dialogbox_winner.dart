@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:confetti/confetti.dart';
 import 'package:get/get.dart';
 import 'package:neumorphic_ui/neumorphic_ui.dart';
@@ -96,13 +97,17 @@ class WinnerDialogBox extends StatelessWidget {
                         height: 1.h,
                       ),
                       SizedBox(
-                        height: 20.h,
-                        child: Image.network(
-                          "${ConstString.baseUrlImage}${prize.imgUrl!}",
-                          height: 30.h,
-                          width: 50.w,
+                        height: 30.h,
+                        width: 50.w,
+                        child:CachedNetworkImage(
+                          imageUrl: "{ConstString.baseUrlImage}${prize.imgUrl!}",
+                          placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                          errorWidget: (context, url, error) => Icon(Icons.error),
                         ),
+
+                        // Image.network("${ConstString.baseUrlImage}${prize.imgUrl!}",),
                       ),
+
 
                       SizedBox(
                         height: 1.h,

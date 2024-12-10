@@ -109,10 +109,7 @@ class ClientHomePage extends StatelessWidget {
                             mainNavController.setPage(val),
                         itemCount: mainNavController.pageViewData.length,
                         itemBuilder: (context, index) {
-
-                          print("${ConstString.baseUrlImage}${mainNavController
-                              .pageViewData[index].imgUrl}"
-                              .toString());
+                          print("${ConstString.baseUrlImage}${mainNavController.pageViewData[index].imgUrl}".toString());
                           return
                             PageViewContent(
                               index: index,

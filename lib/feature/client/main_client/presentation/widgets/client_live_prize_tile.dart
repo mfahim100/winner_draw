@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:get/get.dart';
 import 'package:neumorphic_ui/neumorphic_ui.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -12,7 +13,6 @@ import '../manager/main_nav_client_controller.dart';
 
 class ClientLivePrizeTile extends StatelessWidget {
   final String status;
-
   final String? imgUrl;
   final File? file;
   final String timer;
@@ -36,137 +36,10 @@ class ClientLivePrizeTile extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
       child:
-
-
-
-
       Stack(
         children: [
           Column(
             children: [
-              // Visibility(
-              //   visible: false,
-              //   child: SizedBox(
-              //     width: 80.w,
-              //     child: Align(
-              //       alignment: Alignment.centerLeft,
-              //       child: Row(
-              //         mainAxisSize: MainAxisSize.min,
-              //         children: [
-              //           Text(
-              //             "Date  ",
-              //             style: ConstStyle.tileTitleTextStyle,
-              //           ),
-              //           Text(
-              //             "${DateTime.fromMillisecondsSinceEpoch(prize.timer!).day}/${DateTime.fromMillisecondsSinceEpoch(prize.timer!).month}/${DateTime.fromMillisecondsSinceEpoch(prize.timer!).year}",
-              //             style: ConstStyle.tileTitleTextStyle,
-              //           ),
-              //         ],
-              //       ),
-              //     ),
-              //   ),
-              // ),
-              // SizedBox(
-              //   width: 80.w,
-              //   child: Align(
-              //     alignment: Alignment.centerLeft,
-              //     child: Obx(() => Row(
-              //           mainAxisSize: MainAxisSize.min,
-              //           children: [
-              //             Text(
-              //               "Timer  ",
-              //               style: ConstStyle.tileTitleTextStyle,
-              //             ),
-              //             Text(
-              //               prize.no == 1
-              //                   ? mainController.timerVal1.value
-              //                   : prize.no == 2
-              //                       ? mainController.timerVal2.value
-              //                       : prize.no == 3
-              //                           ? mainController.timerVal3.value
-              //                           : mainController.timerVal1.value,
-              //               style: ConstStyle.tileTitleTextStyle,
-              //             ),
-              //           ],
-              //         )),
-              //   ),
-              // ),
-              // Stack(
-              //   children: [
-              //     Align(
-              //       alignment: Alignment.center,
-              //       child: Container(
-              //         decoration: BoxDecoration(
-              //             image: const DecorationImage(
-              //                 image: AssetImage('assets/images/prize_no.png')),
-              //             borderRadius: BorderRadius.circular(15.sp)),
-              //         padding:
-              //             EdgeInsets.symmetric(horizontal: 14.w, vertical: 1.h),
-              //         child: Text(
-              //           prize.no == 1
-              //               ? '1st Prize'
-              //               : prize.no == 2
-              //                   ? '2nd Prize'
-              //                   : prize.no == 3
-              //                       ? '3rd Prize'
-              //                       : '1st Prize',
-              //           style: ConstStyle.headerTextStyle,
-              //         ),
-              //       ),
-              //     ),
-              //   ],
-              // ),
-              // Neumorphic(
-              //   style: NeumorphicStyle(
-              //     shape: NeumorphicShape.concave,
-              //     boxShape: NeumorphicBoxShape.roundRect(
-              //         BorderRadius.all(Radius.circular(50.sp))),
-              //     color: prize.no == 1
-              //         ? Colors.amber
-              //         : prize.no == 2
-              //             ? Colors.grey.shade500
-              //             : prize.no == 3
-              //                 ?  Colors.amberAccent
-              //                 : Colors.amber,
-              //     // shadowLightColor: ConstColors.darkShadowLight,
-              //     // shadowDarkColor: ConstColors.darkShadowDark,
-              //     depth: 4,
-              //   ),
-              //   child: Container(
-              //     padding:
-              //         EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.5.h),
-              //     width: 90.w,
-              //     child: Align(
-              //       alignment: Alignment.centerLeft,
-              //       child: Text(
-              //         prize.title!,
-              //         style: ConstStyle.headerTextStyle.copyWith(
-              //             color: Colors.black, fontWeight: FontWeight.normal),
-              //       ),
-              //     ),
-              //   ),
-              // ),
-              // // SizedBox(
-              // //   width: 80.w,
-              // //   child: Align(
-              // //     alignment: Alignment.centerLeft,
-              // //     child: Text(
-              // //       prize.description!,
-              // //       style: ConstStyle.tileTitleTextStyle,
-              // //     ),
-              // //   ),
-              // // ),
-              // SizedBox(
-              //   width: 80.w,
-              //   child: Align(
-              //     alignment: Alignment.centerLeft,
-              //     child: Text(
-              //       'Rs/- ${prize.price}',
-              //       style: ConstStyle.tileTitleTextStyle,
-              //     ),
-              //   ),
-              // ),
-
               Column(
                 children: [
                   Container(
@@ -193,7 +66,15 @@ class ClientLivePrizeTile extends StatelessWidget {
 
                           Container(
                               width: 33.w,
-                              child: Image.network("${ConstString.baseUrlImage}${prize.imgUrl!}")),
+                              child:
+                              CachedNetworkImage(
+                                imageUrl: "${ConstString.baseUrlImage}${prize.imgUrl!}",
+                                placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                                errorWidget: (context, url, error) => Icon(Icons.error),
+                              ),
+                              // Image.network("${ConstString.baseUrlImage}${prize.imgUrl!}")
+
+                          ),
 
                           SizedBox(width: 1.w,),
                           Container(
@@ -218,15 +99,17 @@ class ClientLivePrizeTile extends StatelessWidget {
                                 ),
                                 Align(
                                   alignment: Alignment.topLeft,
-                                  child: Text(
-                                    'Timer: ${prize.no == 1
-                                        ? mainController.timerVal1.value
-                                        : prize.no == 2
-                                        ? mainController.timerVal2.value
-                                        : prize.no == 3
-                                        ? mainController.timerVal3.value
-                                        : mainController.timerVal1.value}',
-                                    style: ConstStyle.prizeContainerTextStyles,
+                                  child: Obx(()=>
+                                      Text(
+                                      'Timer: ${prize.no == 1
+                                          ? mainController.timerVal1.value
+                                          : prize.no == 2
+                                          ? mainController.timerVal2.value
+                                          : prize.no == 3
+                                          ? mainController.timerVal3.value
+                                          : mainController.timerVal1.value}',
+                                      style: ConstStyle.prizeContainerTextStyles,
+                                    ),
                                   ),
                                 ),
 
@@ -257,7 +140,8 @@ class ClientLivePrizeTile extends StatelessWidget {
                 child: SizedBox(
                   height: 30.h,
                   child: Stack(
-                    children: [      Positioned(
+                    children: [
+                      Positioned(
                       bottom: -2.8.h,
                       left: 0,
                       right: 0,
@@ -341,127 +225,14 @@ class ClientLivePrizeTile extends StatelessWidget {
                     ],
                   ),
 
-                  // Obx(() => prize.no == 1 && mainController.isTimer1.value
-                  //     ? FortuneWheel(
-                  //         animateFirst: true,
-                  //         indicators: <FortuneIndicator>[
-                  //           FortuneIndicator(
-                  //             alignment: Alignment.center,
-                  //             // <-- changing the position of the indicator
-                  //             child: Center(
-                  //                 child: Image.asset(
-                  //                     'assets/images/indicator.png')),
-                  //           ),
-                  //         ],
-                  //         //       selected: selectedSpinner.stream,
-                  //         items: [
-                  //           for (var it in mainController.itemSpinner)
-                  //             FortuneItem(
-                  //                 style: FortuneItemStyle(color: it),
-                  //                 child: Align(
-                  //                     alignment: Alignment.centerRight,
-                  //                     child: Image.asset(
-                  //                       'assets/images/avatar.png',
-                  //                       height: 10.sp,
-                  //                       width: 10.sp,
-                  //                     ))),
-                  //         ],
-                  //       )
-                  //     : prize.no == 2 && mainController.isTimer2.value
-                  //         ? FortuneWheel(
-                  //             animateFirst: true,
-                  //             indicators: <FortuneIndicator>[
-                  //               FortuneIndicator(
-                  //                 alignment: Alignment.center,
-                  //                 // <-- changing the position of the indicator
-                  //                 child: Center(
-                  //                     child: Image.asset(
-                  //                         'assets/images/indicator.png')),
-                  //               ),
-                  //             ],
-                  //             //       selected: selectedSpinner.stream,
-                  //             items: [
-                  //               for (var it in mainController.itemSpinner)
-                  //                 FortuneItem(
-                  //                     style: FortuneItemStyle(color: it),
-                  //                     child: Align(
-                  //                         alignment: Alignment.centerRight,
-                  //                         child: Image.asset(
-                  //                           'assets/images/avatar.png',
-                  //                           height: 10.sp,
-                  //                           width: 10.sp,
-                  //                         ))),
-                  //             ],
-                  //           )
-                  //         : prize.no == 3 && mainController.isTimer3.value
-                  //             ? FortuneWheel(
-                  //                 animateFirst: true,
-                  //                 indicators: <FortuneIndicator>[
-                  //                   FortuneIndicator(
-                  //                     alignment: Alignment.center,
-                  //                     // <-- changing the position of the indicator
-                  //                     child: Center(
-                  //                         child: Image.asset(
-                  //                             'assets/images/indicator.png')),
-                  //                   ),
-                  //                 ],
-                  //                 //       selected: selectedSpinner.stream,
-                  //                 items: [
-                  //                   for (var it in mainController.itemSpinner)
-                  //                     FortuneItem(
-                  //                         style: FortuneItemStyle(color: it),
-                  //                         child: Align(
-                  //                             alignment: Alignment.centerRight,
-                  //                             child: Image.asset(
-                  //                               'assets/images/avatar.png',
-                  //                               height: 10.sp,
-                  //                               width: 10.sp,
-                  //                             ))),
-                  //                 ],
-                  //               )
-                  //             : FortuneWheel(
-                  //                 animateFirst: false,
-                  //                 indicators: <FortuneIndicator>[
-                  //                   FortuneIndicator(
-                  //                     alignment: Alignment.center,
-                  //                     // <-- changing the position of the indicator
-                  //                     child: Center(
-                  //                         child: Image.asset(
-                  //                             'assets/images/indicator.png')),
-                  //                   ),
-                  //                 ],
-                  //                 //       selected: selectedSpinner.stream,
-                  //                 items: [
-                  //                   for (var it in mainController.itemSpinner)
-                  //                     FortuneItem(
-                  //                         style: FortuneItemStyle(color: it),
-                  //                         child: Align(
-                  //                             alignment: Alignment.centerRight,
-                  //                             child: Image.asset(
-                  //                               'assets/images/avatar.png',
-                  //                               height: 10.sp,
-                  //                               width: 10.sp,
-                  //                             ))),
-                  //                 ],
-                  //               )),
                 ),
               ),
+
+
+
             ],
           ),
-          // Positioned(
-          //     top: 0,
-          //     right: 0,
-          //     child: file != null
-          //         ? Image.file(
-          //             file!,
-          //             height: 20.h,
-          //             width: 30.w,
-          //           )
-          //         : Image.network(
-          //       "${ConstString.baseUrlImage}${prize.imgUrl!}",
-          //             height: 20.h,
-          //             width: 30.w,
-          //           ))
+
         ],
       ),
     );

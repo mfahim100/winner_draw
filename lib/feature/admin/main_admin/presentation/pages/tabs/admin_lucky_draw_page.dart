@@ -35,31 +35,6 @@ class AdminLuckyDrawPage extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        // NeumorphicButton(
-                        //   onPressed: () => mainController.completeDraw(context),
-                        //   style:NeumorphicStyle(
-                        //     shape: NeumorphicShape.convex,
-                        //     boxShape: NeumorphicBoxShape.roundRect(
-                        //         BorderRadius.all(Radius.circular(50.sp))),
-                        //     color: ConstColors.kPrimaryColor,
-                        //     shadowLightColor: ConstColors.lightShadowLight,
-                        //     shadowDarkColor: ConstColors.lightShadowDark,
-                        //   ),
-                        //   padding:  EdgeInsets.symmetric(horizontal: 5.w,vertical: 12.0),
-                        //   child: Row(
-                        //     mainAxisSize: MainAxisSize.min,
-                        //
-                        //     children: [
-                        //       Text('Complete Draw',
-                        //         style: ConstStyle.tileSubTitleTextStyle),
-                        //       SizedBox(width: 3.w,),
-                        //       Icon(
-                        //         Icons.check,
-                        //         color: ConstColors.white,
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
                         NeumorphicButton(
                           onPressed: () => mainController.clearAll(context),
                           style:NeumorphicStyle(
@@ -107,8 +82,7 @@ class AdminLuckyDrawPage extends StatelessWidget {
                       itemCount: mainController.mainList.length,
                       itemBuilder: (context, index) => GestureDetector(
                         onTap: () {
-                          mainController
-                              .editPrize(mainController.mainList[index]);
+                          mainController.editPrize(mainController.mainList[index]);
                           showDialog(
                               context: context,
                               barrierDismissible: false,

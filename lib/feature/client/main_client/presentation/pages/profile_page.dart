@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:get/get.dart';
 import 'package:neumorphic_ui/neumorphic_ui.dart';
 
@@ -71,16 +72,21 @@ class ProfilePage extends StatelessWidget {
                                       backgroundImage: MemoryImage(
                                           profileController.imageFile!))
                                   // : profileController.appUser!.imgUrl!.isEmpty
-                                  : profileController
-                                          .appUser!.profilePicture!.isEmpty
+                                  : profileController.appUser!.profilePicture!.isEmpty
                                       ? CircleAvatar(
                                           radius: 20.h,
                                           backgroundImage: const AssetImage(
                                               'assets/images/task_placeholder.png'))
                                       : CircleAvatar(
                                           radius: 20.h,
-                                          backgroundImage: NetworkImage(
-                                              "${ConstString.baseUrlImage}${profileController.appUser!.profilePicture!}"))),
+                                          child: CachedNetworkImage(
+                                            imageUrl: "${ConstString.baseUrlImage}${profileController.appUser!.profilePicture!}",
+                                            placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                                            errorWidget: (context, url, error) => Icon(Icons.error),
+                                          ),
+                                          // backgroundImage: NetworkImage(
+                                          //     "${ConstString.baseUrlImage}${profileController.appUser!.profilePicture!}")
+      )),
                               Positioned(
                                 bottom: 10.sp,
                                 right: 10.sp,
@@ -112,90 +118,7 @@ class ProfilePage extends StatelessWidget {
                       SizedBox(
                         height: 3.h,
                       ),
-                      // Obx(() =>
-                      // SizedBox(
-                      //   width: 85.w,
-                      //   child: DropdownButtonFormField2<String>(
-                      //     isExpanded: true,
-                      //     hint: const Text(
-                      //       'Select Your Province',
-                      //       style: TextStyle(color: Colors.white, fontSize: 14),
-                      //     ),
-                      //     items: profileController.pakistanStates
-                      //         .map((item) => DropdownMenuItem<String>(
-                      //       value: item,
-                      //       child: Text(
-                      //         item,
-                      //         style: const TextStyle(
-                      //           color: Colors.white,
-                      //           fontSize: 14,
-                      //         ),
-                      //       ),
-                      //     ))
-                      //         .toList(),
-                      //     validator: (value) {
-                      //       if (value == null) {
-                      //         return 'Please select Province.';
-                      //       }
-                      //       return null;
-                      //     },
-                      //     value: profileController.selectedProvince.value,
-                      //     onChanged: (value) =>
-                      //         profileController.setProvince(value!),
-                      //     onSaved: (value) =>
-                      //         profileController.setProvince(value!),
-                      //     buttonStyleData: const ButtonStyleData(
-                      //       padding: EdgeInsets.only(right: 8),
-                      //     ),
-                      //     iconStyleData: const IconStyleData(
-                      //       icon: Icon(
-                      //         Icons.arrow_drop_down,
-                      //         color: Colors.white,
-                      //       ),
-                      //       iconSize: 24,
-                      //     ),
-                      //     dropdownStyleData: DropdownStyleData(
-                      //       decoration: BoxDecoration(
-                      //         color: ConstColors.kBGColor,
-                      //         borderRadius: BorderRadius.circular(25.sp),
-                      //       ),
-                      //     ),
-                      //     menuItemStyleData: const MenuItemStyleData(
-                      //       padding: EdgeInsets.symmetric(horizontal: 16),
-                      //     ),
-                      //     decoration: InputDecoration(
-                      //       // Add Horizontal padding using menuItemStyleData.padding so it matches
-                      //       // the menu padding when button's width is not specified.
-                      //       contentPadding:
-                      //       const EdgeInsets.symmetric(vertical: 16),
-                      //       border: OutlineInputBorder(
-                      //           borderRadius: BorderRadius.circular(12.sp),
-                      //           borderSide:
-                      //           const BorderSide(color: Colors.white)),
-                      //       focusedErrorBorder: OutlineInputBorder(
-                      //           borderRadius: BorderRadius.circular(12.sp),
-                      //           borderSide:
-                      //           const BorderSide(color: Colors.white)),
-                      //       focusedBorder: OutlineInputBorder(
-                      //           borderRadius: BorderRadius.circular(12.sp),
-                      //           borderSide:
-                      //           const BorderSide(color: Colors.white)),
-                      //       errorBorder: OutlineInputBorder(
-                      //           borderRadius: BorderRadius.circular(12.sp),
-                      //           borderSide:
-                      //           const BorderSide(color: Colors.white)),
-                      //       enabledBorder: OutlineInputBorder(
-                      //           borderRadius: BorderRadius.circular(12.sp),
-                      //           borderSide:
-                      //           const BorderSide(color: Colors.white)),
-                      //       disabledBorder: OutlineInputBorder(
-                      //           borderRadius: BorderRadius.circular(12.sp),
-                      //           borderSide:
-                      //           const BorderSide(color: Colors.white)),
-                      //       // Add more decoration..
-                      //     ),
-                      //   ),
-                      // ),),
+
                       SizedBox(height: 1.h),
                       ProfileListTile(
                         icon: Icons.person,
@@ -262,27 +185,13 @@ class ProfilePage extends StatelessWidget {
                               child: Image.asset("assets/images/yt.png"),
                             ),
                           ),
-                          // SizedBox(width: 3.w),
-                          // SizedBox(
-                          //   width: 12.w,
-                          //   height: 12.w,
-                          //   child: NeumorphicButton(
-                          //     onPressed: () =>controller.callWhatsApp(),
-                          //     style: ConstNeus.appBarCirclesDark.copyWith(color: Colors.white),
-                          //     padding:  EdgeInsets.all(5.sp),
-                          //     child: Image.asset("assets/images/WhatsApp.svg.webp"),
-                          //   ),
-                          // ),
+
                         ],
                       ),
                       SizedBox(
                         height: 5.h,
                       ),
-                      // ProfileListTile(
-                      //   icon: Icons.logout,
-                      //   text: 'Logout',
-                      //   onTap: () =>sl<AuthController>().logout(context),
-                      // ),
+
                     ],
                   ),
                 ],

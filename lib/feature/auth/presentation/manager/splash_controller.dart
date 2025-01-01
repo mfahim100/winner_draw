@@ -17,7 +17,7 @@ class SplashController extends GetxController {
   void mainOrAuth() {
     _selectCamera();
     Timer(const Duration(seconds: 3), () {
-      final isLogin =    GetStorage().read("isLogin")??false;
+      final isLogin = GetStorage().read("isLogin")??false;
 
       if (isLogin) {
         sl<AuthController>().loginFunc();

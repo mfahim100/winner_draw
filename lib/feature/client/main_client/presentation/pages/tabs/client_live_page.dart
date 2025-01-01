@@ -163,6 +163,7 @@ class ClientLivePage extends StatelessWidget {
               height: 40.h,
               margin: EdgeInsets.all(15.sp),
               decoration: BoxDecoration(
+                  color: Colors.white,
                   borderRadius: BorderRadius.circular(15.sp)),
               child: Column(
                 children: [

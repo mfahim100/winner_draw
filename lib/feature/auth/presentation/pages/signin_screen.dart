@@ -77,24 +77,24 @@ class SignInScreen extends StatelessWidget {
                           isPass: true,
                           textInputType: TextInputType.text),
                       SizedBox(height: 2.h),
-                      // Visibility(
-                      //   visible: true,
-                      //   child: Align(
-                      //     alignment: AlignmentDirectional.centerEnd,
-                      //     child: GestureDetector(
-                      //       onTap: () => Get.toNamed(Routes.FORGOTPASS),
-                      //       child: Padding(
-                      //         padding: EdgeInsets.all(8.sp),
-                      //         child: Text(
-                      //           "Forgot Password ?",
-                      //           style: ConstStyle.headerTextStyle
-                      //               .copyWith(fontSize: 16.sp,color: Colors.black),
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
-                      // SizedBox(height: 2.h),
+                      Visibility(
+                        visible: true,
+                        child: Align(
+                          alignment: AlignmentDirectional.centerEnd,
+                          child: GestureDetector(
+                            onTap: () => Get.toNamed(Routes.FORGOTPASS),
+                            child: Padding(
+                              padding: EdgeInsets.all(8.sp),
+                              child: Text(
+                                "Forgot Password ?",
+                                style: ConstStyle.headerTextStyle
+                                    .copyWith(fontSize: 16.sp,color: Colors.black),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 2.h),
                       // Hero(
                       //   tag: 'forSubmit',
                       //   child:
